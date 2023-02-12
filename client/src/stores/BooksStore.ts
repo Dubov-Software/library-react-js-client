@@ -23,6 +23,7 @@ const DEFAULT_BOOK: Book = {
 class BooksStore {
   books = observable<Book>([]);
   isOpen = observable.box<boolean>(false);
+  loading = observable.box<boolean>(false);
   currentBook = observable<Book>(DEFAULT_BOOK);
 
   constructor() {
@@ -35,9 +36,11 @@ class BooksStore {
 
   async getData() {
     try {
+      runInAction(() => this.loading.set(true));
       const result = await getBooks();
       if (!!result?.data?.length) {
         runInAction(() => {
+          //this.loading.set(false);
           this.books.replace(
             result.data.map((currentBook) => ({
               ...currentBook,
