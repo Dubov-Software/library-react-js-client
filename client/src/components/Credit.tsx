@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import React from 'react';
-const credits = (props) => {
+const credits = () => {
     return (
         <Container sx={{ position: 'fixed', left: 0, bottom: 0, paddingY: 2}}>
             <Typography variant="body2">

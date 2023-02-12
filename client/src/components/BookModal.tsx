@@ -1,19 +1,20 @@
-import React from "react";
+import React, { Props } from "react";
 import { useState } from "react";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import Backdrop from "@mui/material/Backdrop";
-import { formatDate, isValidDateStr } from "../Helpers";
 import { observer } from "mobx-react-lite";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import TextField from "@mui/material/TextField";
 import { Stack } from "@mui/system";
 import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { runInAction } from 'mobx';
+import BooksStore from "../stores/BooksStore";
 
-const BookModal = observer(({ store, classes }) => {
+interface BookModalProps {
+  store: BooksStore;
+}
+
+const BookModal: React.FC<BookModalProps> = observer(({ store }) => {
   console.log({ store });
   const [titleError, setTitleError] = useState("");
   const [dateError, setDateError] = useState("");
@@ -27,7 +28,7 @@ const BookModal = observer(({ store, classes }) => {
       isValid = false;
     }
 
-    if (store.currentBook?.publication_date?.length <= 0) {
+    if (!!store.currentBook?.publication_date) {
       setDateError("Date can't be empty");
       isValid = false;
     }
@@ -80,19 +81,15 @@ const BookModal = observer(({ store, classes }) => {
         />
         {titleError.length ? <span>{titleError}</span> : null}
         <MobileDatePicker
-          disableToolbar
-          variant="inline"
-          format="dd/MM/yyyy"
+          inputFormat="dd/MM/yyyy"
           renderInput={(props) => <TextField variant="outlined" {...props} />}
-          margin="normal"
-          id="date-picker-inline"
+          InputProps={{
+            id: "date-picker-inline"
+          }}
           label="Publication date"
           value={store.currentBook.publication_date}
           maxDate={new Date()}
-          onChange={(d) => runInAction(() => { store.currentBook.publication_date = d })}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
-          }}
+          onChange={(d) => !!d && runInAction(() => { store.currentBook.publication_date = d })}
         />
         {dateError.length ? <span>{dateError}</span> : null}
         <Stack justifyContent="space-around" flexDirection="row">

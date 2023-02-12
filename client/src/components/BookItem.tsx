@@ -9,8 +9,13 @@ import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Stack from '@mui/material/Stack';
 import format from 'date-fns/format'
+import BooksStore, { Book } from '../stores/BooksStore';
 
-const BookItem = ({ id, title, publication_date, author, store }) => {
+type BookItemProps = Book & {
+  store: BooksStore
+}
+
+const BookItem: React.FC<BookItemProps> = ({ id, title, publication_date, author, store }) => {
   return (
     <Card className="book-item">
       <CardContent>
