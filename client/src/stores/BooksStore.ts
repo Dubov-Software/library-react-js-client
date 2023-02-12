@@ -40,7 +40,7 @@ class BooksStore {
       const result = await getBooks();
       if (!!result?.data?.length) {
         runInAction(() => {
-          //this.loading.set(false);
+          this.loading.set(false);
           this.books.replace(
             result.data.map((currentBook) => ({
               ...currentBook,
