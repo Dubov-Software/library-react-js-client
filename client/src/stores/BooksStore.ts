@@ -1,9 +1,8 @@
-import { IObservableArray, observable, runInAction, transaction, IObservableValue, IObservable } from 'mobx';
+import { observable, runInAction, transaction } from 'mobx';
 import axios from 'axios';
 import { SERVER_URL } from '../Config';
 import { makeAutoObservable } from 'mobx';
 import { getBooks, updateBook, deleteBook } from '../Api';
-import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
 export interface Book {
@@ -28,10 +27,6 @@ class BooksStore {
 
   constructor() {
     makeAutoObservable(this);
-  }
-
-  static sortBooks(b1: Book, b2: Book) {
-    return b1.id.localeCompare(b2.id);
   }
 
   async getData() {

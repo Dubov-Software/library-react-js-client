@@ -1,0 +1,12 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Book {
+  id String [pk]
+  title String [not null]
+  author String [not null]
+  publication_date DateTime [not null]
+  isbn String [default: '']
+  stock Int [default: 0]
+}
